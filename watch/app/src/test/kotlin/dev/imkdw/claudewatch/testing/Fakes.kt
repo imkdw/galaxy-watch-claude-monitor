@@ -50,7 +50,7 @@ class FakeUsageSource(
     var outcome: RefreshOutcome = RefreshOutcome.Unchanged,
     private val afterRefresh: Map<String, UsageFile>? = null,
 ) : UsageSource {
-    val state = MutableStateFlow(Snapshot(accounts, selected))
+    val state = MutableStateFlow(Snapshot.of(accounts, selected))
     var refreshCount = 0
     val selections = mutableListOf<String>()
 
