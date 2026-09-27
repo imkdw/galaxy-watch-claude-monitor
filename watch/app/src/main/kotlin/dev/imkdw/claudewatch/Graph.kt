@@ -8,6 +8,7 @@ import dev.imkdw.claudewatch.data.UsageSource
 import dev.imkdw.claudewatch.data.UsageStore
 import dev.imkdw.claudewatch.work.SystemUiUpdater
 import dev.imkdw.claudewatch.work.UiUpdater
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import java.time.Clock
 import java.time.ZoneId
 
@@ -29,7 +30,7 @@ object Graph {
     }
 
     fun source(context: Context): UsageSource = sourceOverride ?: repository ?: synchronized(this) {
-        repository ?: UsageRepository(GistClient(BuildConfig.GIST_ID), store(context), clock).also { repository = it }
+        repository ?: UsageRepository(GistClient(BuildConfig.GIST_ID, baseUrl = BuildConfig.GIST_API_BASE.toHttpUrl()), store(context), clock).also { repository = it }
     }
 
     fun uiUpdater(context: Context): UiUpdater = uiUpdaterOverride ?: SystemUiUpdater(context.applicationContext)

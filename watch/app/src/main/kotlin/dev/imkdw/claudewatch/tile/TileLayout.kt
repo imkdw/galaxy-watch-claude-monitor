@@ -17,7 +17,6 @@ import androidx.wear.protolayout.layout.spacer
 import androidx.wear.protolayout.material3.ColorScheme
 import androidx.wear.protolayout.material3.MaterialScope
 import androidx.wear.protolayout.material3.Typography
-import androidx.wear.protolayout.material3.compactButton
 import androidx.wear.protolayout.material3.materialScope
 import androidx.wear.protolayout.material3.primaryLayout
 import androidx.wear.protolayout.material3.text
@@ -74,27 +73,34 @@ fun accountClickable(context: Context) = clickable(
 fun tileLayout(context: Context, state: DisplayState, deviceParams: DeviceParameters): LayoutElement =
     materialScope(context, deviceParams, allowDynamicTheme = false, defaultColorScheme = scheme) {
         primaryLayout(
-            titleSlot = { text("Claude 사용량".layoutString) },
-            mainSlot = { mainContent(context, state) },
+            titleSlot = { title(context, state.account) },
+            mainSlot = { mainContent(state) },
             bottomSlot = {
                 textEdgeButton(onClick = refreshClickable()) { text("새로고침".layoutString) }
             },
         )
     }
 
-private fun MaterialScope.mainContent(context: Context, state: DisplayState): LayoutElement {
-    val items = mutableListOf<LayoutElement>()
-    val account = state.account
-    if (account != null) {
-        items += compactButton(
-            onClick = accountClickable(context),
-            labelContent = { text(account.layoutString, color = TileColors.CLAUDE.argb) },
+/** 계정 칩: 탭하면 계정 선택 화면. 화면이 작아서 제목 자리에 둔다 */
+private fun MaterialScope.title(context: Context, account: String?): LayoutElement =
+    if (account == null) {
+        text("Claude 사용량".layoutString)
+    } else {
+        text(
+            "$account ▾".layoutString,
+            color = TileColors.CLAUDE.argb,
+            modifier = LayoutModifier.clickable(accountClickable(context)),
         )
+    }
+
+private fun MaterialScope.mainContent(state: DisplayState): LayoutElement {
+    val items = mutableListOf<LayoutElement>()
+    if (state.account != null) {
         items += usageBlock("세션", state.sessionPct, state.sessionReset)
         items += usageBlock("주간", state.weeklyPct, state.weeklyReset)
-        for (model in state.models) {
+        if (state.models.isNotEmpty()) {
             items += text(
-                "${model.model} ${model.pct}%".layoutString,
+                state.models.joinToString("  ") { "${it.model} ${it.pct}%" }.layoutString,
                 typography = Typography.LABEL_SMALL,
                 color = colorScheme.onSurfaceVariant,
             )
@@ -112,9 +118,9 @@ private fun MaterialScope.mainContent(context: Context, state: DisplayState): La
 private fun MaterialScope.usageBlock(title: String, pct: Int?, reset: String?): LayoutElement {
     val color = TileColors.of(levelOf(pct)).argb
     val header = row(
-        text(title.layoutString, typography = Typography.LABEL_MEDIUM, alignment = TEXT_ALIGN_START),
+        text(title.layoutString, typography = Typography.LABEL_SMALL, alignment = TEXT_ALIGN_START),
         spacer(width = weight(1f)),
-        text((pct?.let { "$it%" } ?: "--").layoutString, typography = Typography.LABEL_LARGE, alignment = TEXT_ALIGN_END),
+        text((pct?.let { "$it%" } ?: "--").layoutString, typography = Typography.LABEL_MEDIUM, alignment = TEXT_ALIGN_END),
         width = expand(),
     )
     val parts = mutableListOf(header, bar(pct, color))

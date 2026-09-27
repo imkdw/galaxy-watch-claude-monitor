@@ -25,6 +25,7 @@ androidxTestRunner = "1.7.0"
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "coreKtx" }
 tiles = { module = "androidx.wear.tiles:tiles", version.ref = "tiles" }
 tiles-testing = { module = "androidx.wear.tiles:tiles-testing", version.ref = "tiles" }
+tiles-renderer = { module = "androidx.wear.tiles:tiles-renderer", version.ref = "tiles" }
 protolayout = { module = "androidx.wear.protolayout:protolayout", version.ref = "protolayout" }
 protolayout-expression = { module = "androidx.wear.protolayout:protolayout-expression", version.ref = "protolayout" }
 protolayout-material3 = { module = "androidx.wear.protolayout:protolayout-material3", version.ref = "protolayout" }

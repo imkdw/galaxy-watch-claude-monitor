@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- debug 빌드만: 에뮬레이터에서 호스트(10.0.2.2) 로컬 서버로 가짜 Gist를 받을 수 있게 한다 -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application android:networkSecurityConfig="@xml/network_security_config" />
+</manifest>

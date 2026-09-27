@@ -33,15 +33,15 @@ class TileLayoutTest {
     @Test
     fun `TL1 정상 상태 텍스트`() {
         val texts = collectTexts(tileLayout(context, normal, watchDevice))
-        assertThat(texts).containsAtLeast("Claude 사용량", "personal", "세션", "42%", "1시간 12분 후 리셋", "주간", "18%", "수 12:00 리셋", "3분 전 변경", "새로고침")
+        assertThat(texts).containsAtLeast("personal ▾", "세션", "42%", "1시간 12분 후 리셋", "주간", "18%", "수 12:00 리셋", "3분 전 변경", "새로고침")
     }
 
     @Test
     fun `TL2 데이터 없음 상태`() {
         val layout = tileLayout(context, DisplayState.Empty, watchDevice)
-        assertThat(collectTexts(layout)).contains("데이터 없음. 수집기 확인")
+        assertThat(collectTexts(layout)).containsAtLeast("Claude 사용량", "데이터 없음. 수집기 확인")
         assertThat(collectTexts(layout)).doesNotContain("세션")
-        assertThat(collectClickables(layout).keys).contains(TileIds.REFRESH)
+        assertThat(collectClickables(layout).keys).containsExactly(TileIds.REFRESH)
     }
 
     @Test

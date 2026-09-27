@@ -11,6 +11,8 @@ val localProps = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 val gistId: String = localProps.getProperty("gistId", "").trim()
+// 에뮬레이터 확인용으로 로컬 서버(http://10.0.2.2:PORT/)를 가리킬 때만 바꾼다
+val gistApiBase: String = localProps.getProperty("gistApiBase", "").trim().ifEmpty { "https://api.github.com/" }
 
 android {
     namespace = "dev.imkdw.claudewatch"
@@ -24,6 +26,7 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "GIST_ID", "\"$gistId\"")
+        buildConfigField("String", "GIST_API_BASE", "\"$gistApiBase\"")
     }
 
     buildFeatures {
@@ -101,6 +104,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.core.ktx)
     androidTestImplementation(libs.androidx.test.ext.junit.ktx)
     androidTestImplementation(libs.work.testing)
+    androidTestImplementation(libs.tiles.renderer)
     androidTestImplementation(libs.kotlinx.coroutines.test)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.compose.ui.test.junit4)
