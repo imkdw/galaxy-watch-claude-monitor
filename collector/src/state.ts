@@ -2,7 +2,6 @@ import type { State } from "./types.ts";
 
 const empty = (): State => ({ accounts: {} });
 
-/** 계정별 직전 업로드 값. 깨졌으면 빈 상태로 시작해 전부 다시 올린다 */
 export async function loadState(
   readFile: (path: string) => Promise<string | null>,
   path: string,

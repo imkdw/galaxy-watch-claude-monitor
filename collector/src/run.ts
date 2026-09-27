@@ -23,7 +23,6 @@ export type RunResult = { exitCode: 0 | 1; uploaded: boolean };
 
 const secondsIso = (d: Date) => new Date(Math.floor(d.getTime() / 1000) * 1000).toISOString().replace(".000Z", "Z");
 
-/** PRD 8.3 키 순서로 파일을 만든다 */
 function toFile(core: UsageCore, changedAt: string): UsageFile {
   return {
     account: core.account,
@@ -36,7 +35,6 @@ function toFile(core: UsageCore, changedAt: string): UsageFile {
   };
 }
 
-/** 오류일 때는 직전 정상값을 유지하고 status만 바꾼다. 직전값이 없으면 null (계획 P1) */
 function errorCore(label: string, prev: UsageFile | undefined, status: Status): UsageCore {
   return {
     account: label,
@@ -82,7 +80,6 @@ export async function run(deps: Deps): Promise<RunResult> {
   let core: UsageCore;
   switch (usage.kind) {
     case "network_error":
-      // 일시 오류라서 status를 바꾸지 않는다 (계획 P2)
       log(`[${label}] 네트워크 오류로 건너뜀: ${usage.detail}`);
       return { exitCode: 0, uploaded: false };
     case "auth_error":
@@ -123,7 +120,6 @@ export async function run(deps: Deps): Promise<RunResult> {
     const githubToken = await readGithubToken(deps.exec);
     await patchGistFile(config.gistId, filename, JSON.stringify(file, null, 2) + "\n", githubToken, deps.fetch);
   } catch (e) {
-    // state를 저장하지 않아 다음 실행 때 다시 시도한다
     return fail(`[${label}] ${(e as Error).message}`);
   }
 

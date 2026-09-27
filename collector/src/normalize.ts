@@ -8,7 +8,6 @@ type Obj = Record<string, unknown>;
 
 const isObj = (v: unknown): v is Obj => typeof v === "object" && v !== null && !Array.isArray(v);
 
-/** 0~100 정수 */
 export function toPct(value: unknown): number {
   if (typeof value !== "number" || !Number.isFinite(value)) {
     throw new NormalizeError(`사용률이 숫자가 아님: ${JSON.stringify(value)}`);
@@ -16,11 +15,10 @@ export function toPct(value: unknown): number {
   return Math.min(100, Math.max(0, Math.round(value)));
 }
 
-/** 마이크로초, 오프셋이 붙은 시각을 초 단위 UTC `Z` 형식으로 자른다 (계획 P3) */
 export function toResetsAt(value: unknown): string {
   const ms = typeof value === "string" ? Date.parse(value) : Number.NaN;
   if (Number.isNaN(ms)) throw new NormalizeError(`resets_at이 시각이 아님: ${JSON.stringify(value)}`);
-  return new Date(Math.floor(ms / 1000) * 1000).toISOString().replace(".000Z", "Z");
+  return new Date(Math.round(ms / 1000) * 1000).toISOString().replace(".000Z", "Z");
 }
 
 function legacyWindow(value: unknown): Window | null {
@@ -41,10 +39,6 @@ function modelName(limit: Obj): string | null {
   return typeof name === "string" && name.trim() !== "" ? name.trim() : null;
 }
 
-/**
- * Anthropic 사용량 응답을 Gist 파일 형식(changedAt 제외)으로 바꾼다.
- * 우선순위: `limits` 배열 → 없으면 `five_hour`/`seven_day` (PRD 8.2)
- */
 export function normalize(raw: unknown, label: string): UsageCore {
   if (!isObj(raw) || !("limits" in raw || "five_hour" in raw || "seven_day" in raw)) {
     throw new NormalizeError("알 수 없는 응답 형식");

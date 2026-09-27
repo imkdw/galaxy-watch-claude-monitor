@@ -15,7 +15,6 @@ async function readPassword(exec: Exec, service: string): Promise<string> {
   }
 }
 
-/** Claude Code가 저장해 둔 OAuth access token. 갱신은 하지 않는다 (PRD 설계 판단 1) */
 export async function readClaudeToken(exec: Exec): Promise<string> {
   const raw = await readPassword(exec, CLAUDE_SERVICE);
   let token: unknown;
@@ -30,7 +29,6 @@ export async function readClaudeToken(exec: Exec): Promise<string> {
   return token;
 }
 
-/** Gist 쓰기 전용 fine-grained PAT */
 export async function readGithubToken(exec: Exec): Promise<string> {
   const token = (await readPassword(exec, GITHUB_SERVICE)).trim();
   if (token === "") throw new KeychainError(`키체인 항목 "${GITHUB_SERVICE}"이 비어 있음`);

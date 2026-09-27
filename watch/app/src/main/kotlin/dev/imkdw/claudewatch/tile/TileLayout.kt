@@ -20,7 +20,7 @@ import androidx.wear.protolayout.material3.Typography
 import androidx.wear.protolayout.material3.materialScope
 import androidx.wear.protolayout.material3.primaryLayout
 import androidx.wear.protolayout.material3.text
-import androidx.wear.protolayout.material3.textEdgeButton
+import androidx.wear.protolayout.material3.compactButton
 import androidx.wear.protolayout.modifiers.LayoutModifier
 import androidx.wear.protolayout.modifiers.background
 import androidx.wear.protolayout.modifiers.clickable
@@ -73,9 +73,7 @@ fun tileLayout(context: Context, state: DisplayState, deviceParams: DeviceParame
         primaryLayout(
             titleSlot = { title(context, state.account) },
             mainSlot = { mainContent(state) },
-            bottomSlot = {
-                textEdgeButton(onClick = refreshClickable()) { text("새로고침".layoutString) }
-            },
+            bottomSlot = { bottom(state) },
         )
     }
 
@@ -90,19 +88,28 @@ private fun MaterialScope.title(context: Context, account: String?): LayoutEleme
         )
     }
 
+private fun MaterialScope.footer(state: DisplayState): LayoutElement = text(
+    state.footer.layoutString,
+    typography = Typography.LABEL_SMALL,
+    color = colorScheme.onSurfaceVariant,
+    maxLines = 2,
+)
+
 private fun MaterialScope.mainContent(state: DisplayState): LayoutElement {
-    val items = mutableListOf<LayoutElement>()
-    if (state.account != null) {
-        items += usageBlock("세션", state.sessionPct, state.sessionReset)
-        items += usageBlock("주간", state.weeklyPct, state.weeklyReset)
-    }
-    items += text(
-        state.footer.layoutString,
-        typography = Typography.LABEL_SMALL,
-        color = colorScheme.onSurfaceVariant,
-        maxLines = 2,
+    if (state.account == null) return footer(state)
+    return column(
+        usageBlock("세션", state.sessionPct, state.sessionReset),
+        usageBlock("주간", state.weeklyPct, state.weeklyReset),
+        width = expand(),
+        horizontalAlignment = HORIZONTAL_ALIGN_CENTER,
     )
-    return column(*items.toTypedArray(), width = expand(), horizontalAlignment = HORIZONTAL_ALIGN_CENTER)
+}
+
+/** 새로고침 버튼 아래에 "N분 전 변경" */
+private fun MaterialScope.bottom(state: DisplayState): LayoutElement {
+    val button = compactButton(onClick = refreshClickable(), labelContent = { text("새로고침".layoutString) })
+    if (state.account == null) return button
+    return column(button, footer(state), horizontalAlignment = HORIZONTAL_ALIGN_CENTER)
 }
 
 private fun MaterialScope.usageBlock(title: String, pct: Int?, reset: String?): LayoutElement {

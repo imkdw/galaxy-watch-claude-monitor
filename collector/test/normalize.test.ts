@@ -49,8 +49,13 @@ test("N4 resets_at은 초 단위 UTC Z 형식으로 자른다", () => {
   assert.equal(r.session?.resetsAt, "2026-09-27T14:20:00Z");
 });
 
+test("N4 초 미만은 반올림한다 (59.9초는 다음 분)", () => {
+  const r = normalize({ five_hour: window(1, "2026-09-29T10:59:59.912+00:00") }, "p");
+  assert.equal(r.session?.resetsAt, "2026-09-29T11:00:00Z");
+});
+
 test("N5 +09:00 오프셋은 UTC로 바꾼다", () => {
-  const r = normalize({ five_hour: window(1, "2026-09-27T23:20:00.999+09:00") }, "p");
+  const r = normalize({ five_hour: window(1, "2026-09-27T23:20:00.499+09:00") }, "p");
   assert.equal(r.session?.resetsAt, "2026-09-27T14:20:00Z");
 });
 

@@ -2,7 +2,6 @@ export type Window = { pct: number; resetsAt: string };
 export type ModelPct = { model: string; pct: number };
 export type Status = "ok" | "auth_error" | "api_error";
 
-/** changedAt을 뺀 정규화 결과. changedAt은 run()이 붙인다. */
 export type UsageCore = {
   account: string;
   session: Window | null;
@@ -12,7 +11,6 @@ export type UsageCore = {
   source: string;
 };
 
-/** Gist에 올라가는 usage-<label>.json 형식 (PRD 8.3) */
 export type UsageFile = {
   account: string;
   session: Window | null;

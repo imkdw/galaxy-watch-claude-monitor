@@ -37,6 +37,10 @@ test("A5 ~/.claude.json이 없거나 oauthAccount가 없으면 AccountError", ()
   assert.throws(() => resolveAccount(claudeJson("   "), mapping), AccountError);
 });
 
+test("A4 괄호는 라벨에 그대로 둔다", () => {
+  assert.equal(resolveAccount(claudeJson("imkdw@pgmworks.com"), { "imkdw@pgmworks.com": "work(x20)" }).label, "work(x20)");
+});
+
 test("A4 라벨이 비면 AccountError", () => {
   assert.throws(() => resolveAccount(claudeJson("me@gmail.com"), { "me@gmail.com": "" }), AccountError);
 });

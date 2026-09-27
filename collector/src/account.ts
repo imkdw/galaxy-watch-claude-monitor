@@ -4,12 +4,10 @@ export class AccountError extends Error {
 
 export type ResolvedAccount = { email: string; label: string; mapped: boolean };
 
-/** 파일명 `usage-<label>.json`에 안전한 문자만 남긴다 */
 export function sanitizeLabel(label: string): string {
-  return label.trim().replace(/[^A-Za-z0-9._-]+/g, "-");
+  return label.trim().replace(/[^A-Za-z0-9._()-]+/g, "-");
 }
 
-/** `~/.claude.json`의 로그인 계정 이메일을 라벨로 바꾼다. 매핑이 없으면 `@` 앞부분 */
 export function resolveAccount(claudeJson: string | null, mapping: Record<string, string>): ResolvedAccount {
   if (claudeJson === null) throw new AccountError("~/.claude.json이 없음 (Claude Code 로그인 필요)");
   let parsed: unknown;

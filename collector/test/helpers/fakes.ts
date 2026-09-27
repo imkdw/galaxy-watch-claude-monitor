@@ -6,7 +6,6 @@ export type Route = {
   respond: (req: RecordedRequest) => Response | Promise<Response>;
 };
 
-/** 등록된 라우트로 응답하고 모든 요청을 기록하는 가짜 fetch */
 export function fakeFetch(routes: Route[]) {
   const calls: RecordedRequest[] = [];
   const fetch = (async (input: string | URL | Request, init: RequestInit = {}) => {
@@ -35,7 +34,6 @@ export const networkDown = (): never => {
   throw new TypeError("fetch failed");
 };
 
-/** 서비스명(-s 값)으로 응답을 고르는 가짜 security 실행기. 값이 Error면 실패 */
 export function fakeExec(byService: Record<string, string | Error>) {
   const calls: { cmd: string; args: string[] }[] = [];
   const exec = async (cmd: string, args: string[]) => {
@@ -49,7 +47,6 @@ export function fakeExec(byService: Record<string, string | Error>) {
   return { exec, calls };
 }
 
-/** 메모리 파일 시스템 */
 export function memFs(initial: Record<string, string> = {}) {
   const files = new Map(Object.entries(initial));
   const writes: string[] = [];

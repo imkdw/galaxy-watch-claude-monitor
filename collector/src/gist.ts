@@ -9,7 +9,6 @@ export class GistError extends Error {
   }
 }
 
-/** Gist의 파일 하나만 덮어쓴다. 다른 계정 파일은 건드리지 않는다 */
 export async function patchGistFile(
   gistId: string,
   filename: string,
