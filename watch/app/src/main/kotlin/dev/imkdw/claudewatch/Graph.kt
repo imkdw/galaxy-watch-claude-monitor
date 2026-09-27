@@ -6,6 +6,9 @@ import dev.imkdw.claudewatch.data.GistClient
 import dev.imkdw.claudewatch.data.UsageRepository
 import dev.imkdw.claudewatch.data.UsageSource
 import dev.imkdw.claudewatch.data.UsageStore
+import dev.imkdw.claudewatch.notify.AlertCheck
+import dev.imkdw.claudewatch.notify.AlertEvaluator
+import dev.imkdw.claudewatch.notify.Notifier
 import dev.imkdw.claudewatch.work.SystemUiUpdater
 import dev.imkdw.claudewatch.work.UiUpdater
 import okhttp3.HttpUrl.Companion.toHttpUrl
@@ -19,6 +22,7 @@ object Graph {
     @Volatile private var sourceOverride: UsageSource? = null
     @Volatile private var uiUpdaterOverride: UiUpdater? = null
     @Volatile private var clockOverride: Clock? = null
+    @Volatile private var alertCheckOverride: AlertCheck? = null
     @Volatile private var store: UsageStore? = null
     @Volatile private var repository: UsageRepository? = null
 
@@ -35,10 +39,19 @@ object Graph {
 
     fun uiUpdater(context: Context): UiUpdater = uiUpdaterOverride ?: SystemUiUpdater(context.applicationContext)
 
-    fun override(source: UsageSource? = null, uiUpdater: UiUpdater? = null, clock: Clock? = null) {
+    fun alertCheck(context: Context): AlertCheck =
+        alertCheckOverride ?: AlertEvaluator(store(context), Notifier(context.applicationContext), clock)
+
+    fun override(
+        source: UsageSource? = null,
+        uiUpdater: UiUpdater? = null,
+        clock: Clock? = null,
+        alertCheck: AlertCheck? = null,
+    ) {
         sourceOverride = source
         uiUpdaterOverride = uiUpdater
         clockOverride = clock
+        alertCheckOverride = alertCheck
     }
 
     fun reset() = override()

@@ -5,9 +5,11 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import dev.imkdw.claudewatch.notify.AlertMemory
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.serialization.SerializationException
 import java.time.Instant
 
 /** 계정별 캐시 + 선택 계정 + ETag. 타일과 컴플리케이션은 이것만 읽는다 */
@@ -47,10 +49,24 @@ class UsageStore(private val dataStore: DataStore<Preferences>) {
         dataStore.edit { it[SELECTED] = label }
     }
 
+    suspend fun alertMemory(): AlertMemory {
+        val json = dataStore.data.first()[ALERTS] ?: return AlertMemory()
+        return try {
+            UsageJson.decodeFromString(AlertMemory.serializer(), json)
+        } catch (_: SerializationException) {
+            AlertMemory()
+        }
+    }
+
+    suspend fun saveAlertMemory(memory: AlertMemory) {
+        dataStore.edit { it[ALERTS] = UsageJson.encodeToString(AlertMemory.serializer(), memory) }
+    }
+
     private companion object {
         const val ACCOUNT_PREFIX = "account:"
         val SELECTED = stringPreferencesKey("selected")
         val ETAG = stringPreferencesKey("etag")
         val LAST_FETCH_AT = longPreferencesKey("lastFetchAt")
+        val ALERTS = stringPreferencesKey("alerts")
     }
 }

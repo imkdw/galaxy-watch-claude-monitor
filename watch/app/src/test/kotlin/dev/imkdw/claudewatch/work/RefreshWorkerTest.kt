@@ -11,9 +11,11 @@ import androidx.work.testing.WorkManagerTestInitHelper
 import com.google.common.truth.Truth.assertThat
 import dev.imkdw.claudewatch.Graph
 import dev.imkdw.claudewatch.data.FailReason
+import dev.imkdw.claudewatch.data.UsageFile
 import dev.imkdw.claudewatch.data.RefreshOutcome
 import dev.imkdw.claudewatch.testing.FakeUiUpdater
 import dev.imkdw.claudewatch.testing.FakeUsageSource
+import dev.imkdw.claudewatch.testing.usageFile
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
@@ -25,11 +27,12 @@ import java.util.concurrent.TimeUnit
 class RefreshWorkerTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
     private val ui = FakeUiUpdater()
-    private val source = FakeUsageSource()
+    private val source = FakeUsageSource(mapOf("personal" to usageFile()))
+    private val checked = mutableListOf<Map<String, UsageFile>>()
 
     @Before
     fun setUp() {
-        Graph.override(source = source, uiUpdater = ui)
+        Graph.override(source = source, uiUpdater = ui, alertCheck = { checked += it })
     }
 
     @After
@@ -59,6 +62,14 @@ class RefreshWorkerTest {
         source.outcome = RefreshOutcome.Unchanged
         runWorker()
         assertThat(ui.count).isEqualTo(1)
+    }
+
+    @Test
+    fun `W4 조회 뒤 모든 계정으로 알림 판정 1회 (P1)`() = runTest {
+        source.outcome = RefreshOutcome.Updated
+        runWorker()
+        assertThat(checked).hasSize(1)
+        assertThat(checked.single().keys).containsExactly("personal")
     }
 
     @Test

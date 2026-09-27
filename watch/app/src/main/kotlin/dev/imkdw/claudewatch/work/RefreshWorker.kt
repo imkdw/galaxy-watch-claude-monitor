@@ -5,14 +5,18 @@ import android.util.Log
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import dev.imkdw.claudewatch.Graph
+import dev.imkdw.claudewatch.data.snapshot
 import kotlin.coroutines.cancellation.CancellationException
 
 class RefreshWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result {
         try {
-            val outcome = Graph.source(applicationContext).refresh()
+            val source = Graph.source(applicationContext)
+            val outcome = source.refresh()
             Log.i(TAG, "refresh: $outcome")
+            // P1: 실패나 304여도 판정한다 (워치가 계산한 리셋도 알림 대상)
+            Graph.alertCheck(applicationContext).check(source.snapshot().accounts)
         } catch (e: CancellationException) {
             throw e
         } catch (e: Exception) {

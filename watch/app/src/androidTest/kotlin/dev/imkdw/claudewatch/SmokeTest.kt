@@ -1,11 +1,13 @@
 package dev.imkdw.claudewatch
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import androidx.lifecycle.Lifecycle
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.platform.app.InstrumentationRegistry
 import androidx.wear.protolayout.DeviceParametersBuilders
 import androidx.wear.tiles.RequestBuilders
 import androidx.wear.tiles.connection.DefaultTileClient
@@ -33,6 +35,9 @@ class SmokeTest {
 
     @Test
     fun e2_계정_선택_화면이_크래시_없이_뜬다() {
+        // 권한 요청 대화상자가 화면을 가리지 않게 미리 허용한다
+        InstrumentationRegistry.getInstrumentation().uiAutomation
+            .grantRuntimePermission(context.packageName, Manifest.permission.POST_NOTIFICATIONS)
         ActivityScenario.launch(AccountPickerActivity::class.java).use { scenario ->
             Thread.sleep(1_000)
             assertThat(scenario.state).isEqualTo(Lifecycle.State.RESUMED)
