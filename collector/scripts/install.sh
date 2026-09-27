@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
-# 수집기를 launchd에 등록한다 (5분마다 실행).
-#   scripts/install.sh            설치 (다시 실행하면 재설치)
-#   scripts/install.sh --print    치환된 plist를 stdout으로만 출력
-#   scripts/install.sh --uninstall
 set -euo pipefail
 
 LABEL="dev.imkdw.claude-watch"
@@ -14,7 +10,6 @@ DOMAIN="gui/$(id -u)"
 
 render() {
   local node_path
-  # launchd는 셸 PATH(nvm)를 읽지 않으므로 절대 경로를 넣는다
   node_path="$(command -v node || true)"
   if [[ -z "$node_path" ]]; then
     echo "node를 찾을 수 없음" >&2
