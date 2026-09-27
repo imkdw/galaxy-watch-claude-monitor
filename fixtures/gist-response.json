@@ -1,0 +1,41 @@
+{
+  "url": "https://api.github.com/gists/0123456789abcdef0123456789abcdef",
+  "id": "0123456789abcdef0123456789abcdef",
+  "public": false,
+  "files": {
+    "README.md": {
+      "filename": "README.md",
+      "type": "text/markdown",
+      "language": "Markdown",
+      "raw_url": "https://gist.githubusercontent.com/imkdw/0123456789abcdef0123456789abcdef/raw/0000000000000000000000000000000000000000/README.md",
+      "size": 15,
+      "truncated": false,
+      "content": "# claude-watch\n",
+      "encoding": "utf-8"
+    },
+    "usage-personal.json": {
+      "filename": "usage-personal.json",
+      "type": "application/json",
+      "language": "JSON",
+      "raw_url": "https://gist.githubusercontent.com/imkdw/0123456789abcdef0123456789abcdef/raw/0000000000000000000000000000000000000000/usage-personal.json",
+      "size": 295,
+      "truncated": false,
+      "content": "{\n  \"account\": \"personal\",\n  \"session\": { \"pct\": 22, \"resetsAt\": \"2026-09-27T14:20:00Z\" },\n  \"weekly\": { \"pct\": 44, \"resetsAt\": \"2026-09-29T11:00:00Z\" },\n  \"weeklyByModel\": [{ \"model\": \"Fable\", \"pct\": 0 }],\n  \"changedAt\": \"2026-09-27T12:05:00Z\",\n  \"status\": \"ok\",\n  \"source\": \"oauth-usage-v1\"\n}\n",
+      "encoding": "utf-8"
+    },
+    "usage-work.json": {
+      "filename": "usage-work.json",
+      "type": "application/json",
+      "language": "JSON",
+      "raw_url": "https://gist.githubusercontent.com/imkdw/0123456789abcdef0123456789abcdef/raw/0000000000000000000000000000000000000000/usage-work.json",
+      "size": 280,
+      "truncated": false,
+      "content": "{\n  \"account\": \"work\",\n  \"session\": {\n    \"pct\": 10,\n    \"resetsAt\": \"2026-09-27T16:00:00Z\"\n  },\n  \"weekly\": {\n    \"pct\": 5,\n    \"resetsAt\": \"2026-10-01T03:00:00Z\"\n  },\n  \"weeklyByModel\": [],\n  \"changedAt\": \"2026-09-27T11:40:00Z\",\n  \"status\": \"ok\",\n  \"source\": \"oauth-usage-v1\"\n}\n",
+      "encoding": "utf-8"
+    }
+  },
+  "created_at": "2026-09-27T10:00:00Z",
+  "updated_at": "2026-09-27T12:05:00Z",
+  "description": "claude-watch",
+  "truncated": false
+}

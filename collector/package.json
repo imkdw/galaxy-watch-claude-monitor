@@ -1,0 +1,23 @@
+{
+  "name": "claude-watch-collector",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Claude 구독 사용량을 조회해 바뀌었을 때만 GitHub Gist에 올리는 Mac 수집기",
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node src/main.ts",
+    "dry": "node src/main.ts --dry-run",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "test:watch": "node --test --watch \"test/**/*.test.ts\"",
+    "coverage": "node --test --experimental-test-coverage --test-coverage-exclude=\"test/**\" --test-coverage-exclude=\"src/main.ts\" --test-coverage-lines=90 \"test/**/*.test.ts\"",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm test"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.3",
+    "typescript": "^7.0.2"
+  }
+}

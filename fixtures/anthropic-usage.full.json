@@ -1,0 +1,19 @@
+{
+  "five_hour": { "utilization": 22.0, "resets_at": "2026-09-27T14:20:00.292126+00:00" },
+  "seven_day": { "utilization": 44.0, "resets_at": "2026-09-29T11:00:00.292152+00:00" },
+  "seven_day_opus": null,
+  "seven_day_sonnet": null,
+  "limits": [
+    { "kind": "session", "group": "session", "percent": 22, "severity": "normal", "resets_at": "2026-09-27T14:20:00.292126+00:00", "scope": null },
+    { "kind": "weekly_all", "group": "weekly", "percent": 44, "severity": "normal", "resets_at": "2026-09-29T11:00:00.292152+00:00", "scope": null },
+    { "kind": "weekly_scoped", "group": "weekly", "percent": 0, "severity": "normal", "resets_at": "2026-09-29T11:00:00+00:00", "scope": { "model": { "display_name": "Fable" } } }
+  ],
+  "seven_day_breakdown": {
+    "rows": [
+      { "key": "claude_code", "percent": 100 },
+      { "key": "chat", "percent": 0 }
+    ]
+  },
+  "extra_usage": { "is_enabled": false, "monthly_limit": null, "used_credits": null },
+  "spend": { "amount": 0, "currency": "USD" }
+}
