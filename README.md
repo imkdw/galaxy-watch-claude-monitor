@@ -6,7 +6,13 @@
 
 개인/회사처럼 계정이 여러 개면 워치에서 골라 본다.
 
-![워치 타일: work(x20) 계정, 세션 10%, 주간 47%, 리셋까지 남은 시간, 2분 전 변경](docs/diagrams/watch-tile.png)
+<br>
+
+<p align="center">
+  <img src="docs/diagrams/watch-tile.png" width="240" alt="워치 타일: work(x20) 계정, 세션 10%, 주간 47%, 리셋까지 남은 시간, 2분 전 변경">
+</p>
+
+<br>
 
 - **서버 없음, 비용 0원**
 
@@ -20,13 +26,21 @@
 
   워치에는 비밀키가 없다.
 
+<br>
+
 설계 배경은 [`docs/PRD.md`](docs/PRD.md), 테스트 목록은 [`docs/IMPLEMENTATION_PLAN.md`](docs/IMPLEMENTATION_PLAN.md)에 있다.
+
+<br>
 
 ---
 
 ## 어떻게 동작하나
 
+<br>
+
 ![구조도](docs/diagrams/architecture.png)
+
+<br>
 
 1. **Mac 수집기** (`collector/`)가 launchd로 5분마다 실행된다.
 
@@ -48,11 +62,15 @@
 
    그리기 직전에 리셋 시각이 지났는지 계산한다.
 
+<br>
+
 | 구성 | 기술 | 하는 일 |
 |------|------|---------|
 | 수집기 | TypeScript, Node 24, launchd | 계정 인식, 사용량 조회, 바뀐 값만 업로드 |
 | 릴레이 | GitHub 비밀 Gist | 계정마다 파일 1개 |
 | 워치 앱 | Kotlin, Wear OS 6 | 조회, 저장, 표시, 계정 선택, 알림 |
+
+<br>
 
 ### 여러 Mac, 여러 계정
 
@@ -72,6 +90,8 @@
 
   매핑이 없으면 이메일 `@` 앞부분이 이름이 된다.
 
+<br>
+
 ### 화면
 
 | 화면 | 내용 |
@@ -80,6 +100,8 @@
 | 컴플리케이션 | 워치페이스 링. 60% 이상 주황, 85% 이상 빨강 |
 | 계정 선택 | 계정별 세션/주간 %. 고르면 타일과 컴플리케이션이 같이 바뀜 |
 | 알림 | 세션 80%, 95% 도달 시 진동. 100% 찍은 세션이 리셋되면 알림 |
+
+<br>
 
 ### 상태별 표시
 
@@ -91,6 +113,8 @@
 | API 형식 변경 | "수집 오류" |
 | 한 번도 못 받음 | "데이터 없음. 수집기 확인" |
 
+<br>
+
 ---
 
 ## 에이전트용 설치 가이드
@@ -98,6 +122,8 @@
 > Claude Code 같은 코딩 에이전트가 새 Mac에서 그대로 따라 하도록 쓴 절차다.
 >
 > 사람도 똑같이 따라 하면 된다.
+
+<br>
 
 ### 0. 규칙
 
@@ -111,6 +137,8 @@
 
 - 키체인 팝업, 워치 페어링 코드처럼 사람 손이 필요한 곳에서는 멈추고 사용자에게 요청한다.
 
+<br>
+
 ### 1. 사용자에게 받을 값
 
 | 값 | 설명 |
@@ -118,6 +146,8 @@
 | `GIST_ID` | 비밀 Gist ID. 다른 Mac과 **같은 값** |
 | GitHub 토큰 | Fine-grained PAT. 권한은 **Gists: Read and write** 하나만 |
 | 계정 매핑 | 이 Mac의 Claude 계정 이메일과 워치에 보일 이름 |
+
+<br>
 
 **없을 때**
 
@@ -131,6 +161,8 @@
 
   이름에는 영문, 숫자, `.`, `_`, `-`, 괄호만 쓴다. 나머지 문자는 `-`로 바뀐다.
 
+<br>
+
 ### 2. 사전 조건 확인
 
 ```bash
@@ -143,6 +175,8 @@ security find-generic-password -s "Claude Code-credentials" >/dev/null && echo "
 
 - Claude Code 로그인이 없으면 `claude` 실행 후 `/login`을 요청한다.
 
+<br>
+
 ### 3. 저장소 받기
 
 ```bash
@@ -153,6 +187,8 @@ cd ~/galaxy-watch-claude-monitor/collector
 수집기는 런타임 의존성이 없어서 `npm install` 없이 실행된다.
 
 `npm install`은 타입 검사와 테스트를 돌릴 때만 필요하다.
+
+<br>
 
 ### 4. 설정 파일
 
@@ -173,6 +209,8 @@ JSON
 chmod 600 ~/.config/claude-watch/config.json
 ```
 
+<br>
+
 ### 5. GitHub 토큰을 키체인에 저장
 
 **확인:** `security find-generic-password -s claude-watch-github >/dev/null && echo 있음`
@@ -188,6 +226,8 @@ curl -s -o /dev/null -w "%{http_code}\n" \
   -H "Authorization: Bearer $(security find-generic-password -s claude-watch-github -w)" \
   https://api.github.com/gists/<GIST_ID>
 ```
+
+<br>
 
 ### 6. 한 번 돌려 보기
 
@@ -208,6 +248,8 @@ npm start       # 실제 업로드. "usage-<라벨>.json 업로드" 로그
 npm start       # 두 번째는 "변경 없음"이어야 함
 ```
 
+<br>
+
 ### 7. launchd 등록
 
 ```bash
@@ -220,11 +262,15 @@ nvm으로 Node 버전을 바꾸면 `scripts/install.sh`를 다시 실행한다.
 
 plist에 node 절대 경로가 들어가 있기 때문이다.
 
+<br>
+
 ### 8. 워치 앱 (워치 한 대에 한 번만)
 
 이미 워치에 설치돼 있으면 건너뛴다.
 
 Mac을 추가해도 워치는 다시 설치할 필요가 없다. 새 계정은 다음 조회 때 목록에 뜬다.
+
+<br>
 
 **필요한 것:** Android SDK Platform 37, JDK 17, Android Studio
 
@@ -232,6 +278,8 @@ Mac을 추가해도 워치는 다시 설치할 필요가 없다. 새 계정은 �
 cd ~/galaxy-watch-claude-monitor/watch
 printf 'sdk.dir=%s\ngistId=%s\n' "$HOME/Library/Android/sdk" "<GIST_ID>" > local.properties
 ```
+
+<br>
 
 **무선 디버깅 연결 (사용자 손이 필요)**
 
@@ -246,6 +294,8 @@ printf 'sdk.dir=%s\ngistId=%s\n' "$HOME/Library/Android/sdk" "<GIST_ID>" > local
    (Mac과 같은 와이파이)
 
 3. **새 기기 페어링** 화면을 띄운 채로 6자리 코드를 알려 주기
+
+<br>
 
 **설치**
 
@@ -264,6 +314,8 @@ $ADB -s <IP>:<connect 포트> shell pm grant dev.imkdw.claudewatch android.permi
 
 - 워치 화면이 꺼지면 connect 포트가 바뀔 수 있다. `adb mdns services`로 다시 찾는다.
 
+<br>
+
 **설치 후 사용자에게 확인 요청**
 
 1. 워치페이스에서 왼쪽으로 넘겨 **Claude 사용량** 타일이 있는지
@@ -273,6 +325,8 @@ $ADB -s <IP>:<connect 포트> shell pm grant dev.imkdw.claudewatch android.permi
 2. 워치페이스 편집에서 컴플리케이션 칸에 **Claude 세션**을 넣을 수 있는지
 
    삼성 워치페이스 일부는 안 된다.
+
+<br>
 
 ### 9. 문제 해결
 
@@ -286,6 +340,8 @@ $ADB -s <IP>:<connect 포트> shell pm grant dev.imkdw.claudewatch android.permi
 | `네트워크 오류로 건너뜀` | 없음. 다음 실행 때 자동 |
 | 워치에 옛 계정 이름이 남음 | Gist에서 옛 `usage-<옛 라벨>.json` 삭제 |
 
+<br>
+
 **제거**
 
 ```bash
@@ -293,6 +349,8 @@ $ADB -s <IP>:<connect 포트> shell pm grant dev.imkdw.claudewatch android.permi
 rm -rf ~/.config/claude-watch
 security delete-generic-password -s claude-watch-github
 ```
+
+<br>
 
 ---
 
@@ -302,6 +360,8 @@ security delete-generic-password -s claude-watch-github
 make test                                   # 수집기 + 워치 JVM 테스트
 ```
 
+<br>
+
 **수집기**
 
 ```bash
@@ -309,6 +369,8 @@ cd collector
 npm install && npm run check                # 타입 검사 + 테스트
 npm run coverage                            # 라인 커버리지 90% 미만이면 실패
 ```
+
+<br>
 
 **워치**
 
@@ -319,11 +381,15 @@ cd watch
 ANDROID_SERIAL=<에뮬레이터> ./gradlew connectedDebugAndroidTest
 ```
 
+<br>
+
 - 테스트는 실제 키체인, 네트워크, 홈 디렉터리를 건드리지 않는다.
 
 - 수집기와 워치는 코드를 공유하지 않는다.
 
   대신 `fixtures/`의 같은 JSON을 양쪽 테스트가 읽어서 형식이 어긋나는 걸 잡는다.
+
+<br>
 
 ### 에뮬레이터에서 가짜 Gist로 화면 보기
 
@@ -342,6 +408,8 @@ mkdir -p /tmp/fakegist/gists && cp fixtures/gist-response.json /tmp/fakegist/gis
 ```
 
 픽스처의 리셋 시각은 과거라서 0%로 보인다. 값을 보려면 `resetsAt`을 미래 시각으로 바꾼다.
+
+<br>
 
 ### 폴더
 
