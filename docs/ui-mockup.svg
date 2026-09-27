@@ -1,20 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1400" height="560" viewBox="0 0 1400 560" font-family="Apple SD Gothic Neo, Noto Sans KR, sans-serif">
   <rect width="1400" height="560" fill="#f4f1ec"/>
 
-  <!-- ① 워치페이스 + 컴플리케이션 -->
   <g>
     <circle cx="230" cy="240" r="212" fill="#2b2b2b"/>
     <circle cx="230" cy="240" r="200" fill="#000"/>
     <text x="230" y="215" fill="#fff" font-size="64" font-weight="300" text-anchor="middle">10:09</text>
     <text x="230" y="250" fill="#9aa0a6" font-size="16" text-anchor="middle">9월 27일 토</text>
 
-    <!-- 다른 컴플리케이션 (예시) -->
     <text x="130" y="330" fill="#9aa0a6" font-size="13" text-anchor="middle">심박</text>
     <text x="130" y="352" fill="#fff" font-size="18" text-anchor="middle">72</text>
     <text x="330" y="330" fill="#9aa0a6" font-size="13" text-anchor="middle">걸음</text>
     <text x="330" y="352" fill="#fff" font-size="18" text-anchor="middle">6,120</text>
 
-    <!-- Claude 컴플리케이션 (RANGED_VALUE) -->
     <circle cx="230" cy="355" r="36" fill="none" stroke="#333" stroke-width="7"/>
     <circle cx="230" cy="355" r="36" fill="none" stroke="#D97757" stroke-width="7" stroke-linecap="round"
             stroke-dasharray="95 226" transform="rotate(-90 230 355)"/>
@@ -25,13 +22,11 @@
     <text x="230" y="515" fill="#666" font-size="14" text-anchor="middle">선택한 계정의 세션 % 링</text>
   </g>
 
-  <!-- ② 타일 -->
   <g>
     <circle cx="700" cy="240" r="212" fill="#2b2b2b"/>
     <circle cx="700" cy="240" r="200" fill="#000"/>
     <text x="700" y="98" fill="#9aa0a6" font-size="15" text-anchor="middle">Claude 사용량</text>
 
-    <!-- 계정 칩 (탭하면 ③) -->
     <rect x="630" y="112" width="140" height="32" rx="16" fill="#2a2a2a" stroke="#D97757" stroke-width="1.5"/>
     <text x="690" y="134" fill="#D97757" font-size="15" font-weight="600" text-anchor="middle">personal</text>
     <path d="M744 124 l6 6 l6 -6" fill="none" stroke="#D97757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -56,7 +51,6 @@
     <text x="700" y="515" fill="#666" font-size="14" text-anchor="middle">계정 칩 탭 → ③ / 아래 버튼 탭 → 즉시 갱신</text>
   </g>
 
-  <!-- ③ 계정 선택 -->
   <g>
     <circle cx="1170" cy="240" r="212" fill="#2b2b2b"/>
     <circle cx="1170" cy="240" r="200" fill="#000"/>
