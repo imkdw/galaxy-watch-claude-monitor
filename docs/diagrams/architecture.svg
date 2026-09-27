@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1040 440" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="architecture-title architecture-desc">
+    <title id="architecture-title">Claude 사용량 모니터 구조</title>
+    <desc id="architecture-desc">Mac 수집기가 5분마다 Anthropic 사용량 API를 조회해 값이 바뀔 때만 GitHub 비밀 Gist에 올리고, Galaxy Watch가 15분마다 Gist를 읽어 캐시한 뒤 타일, 컴플리케이션, 계정 선택 화면에 보여 주는 구조.</desc>
+    <defs>
+      <style>@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&amp;family=Geist+Mono:wght@400;500;600&amp;family=Noto+Sans+KR:wght@400;500;600&amp;display=swap');</style>
+      <marker id="arrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4f5d75"/></marker>
+      <marker id="arrow-accent" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#eb6c36"/></marker>
+      <marker id="arrow-link" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2e5aa8"/></marker>
+    </defs>
+    <rect width="100%" height="100%" fill="#f5f5f5"/>
+
+    <!-- zones -->
+    <rect x="24" y="140" width="280" height="120" rx="8" fill="#2d3142" fill-opacity="0.02" stroke="#2d3142" stroke-opacity="0.10" stroke-width="0.8"/>
+    <rect x="36" y="144" width="64" height="12" rx="2" fill="#f5f5f5"/>
+    <text x="68" y="153" fill="#2d3142" fill-opacity="0.40" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">MAC 1..N</text>
+
+    <rect x="612" y="64" width="408" height="264" rx="8" fill="#2d3142" fill-opacity="0.02" stroke="#2d3142" stroke-opacity="0.10" stroke-width="0.8"/>
+    <rect x="624" y="68" width="88" height="12" rx="2" fill="#f5f5f5"/>
+    <text x="668" y="77" fill="#2d3142" fill-opacity="0.40" font-size="7" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.14em">GALAXY WATCH</text>
+
+    <!-- arrows -->
+    <line x1="152" y1="200" x2="174" y2="200" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+    <path d="M 232,172 V 76 Q 232,68 240,68 H 334" fill="none" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+    <rect x="242" y="104" width="56" height="12" rx="2" fill="#f5f5f5"/>
+    <text x="270" y="113" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">EVERY 5MIN</text>
+
+    <line x1="288" y1="200" x2="398" y2="200" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+    <rect x="315" y="180" width="56" height="12" rx="2" fill="#f5f5f5"/>
+    <text x="343" y="189" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">ON CHANGE</text>
+
+    <line x1="560" y1="200" x2="630" y2="200" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+    <rect x="566" y="180" width="52" height="12" rx="2" fill="#f5f5f5"/>
+    <text x="592" y="189" fill="#7a8399" font-size="8" font-family="'Geist Mono', monospace" text-anchor="middle" letter-spacing="0.06em">GET 15MIN</text>
+
+    <path d="M 776,186 H 788 Q 796,186 796,178 V 132 Q 796,124 804,124 H 838" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+    <line x1="776" y1="200" x2="838" y2="200" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+    <path d="M 776,214 H 804 Q 812,214 812,222 V 268 Q 812,276 820,276 H 838" fill="none" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+    <!-- nodes -->
+    <!-- Claude Code (input) -->
+    <rect x="40" y="172" width="112" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="40" y="172" width="112" height="56" rx="6" fill="#4f5d75" fill-opacity="0.10" stroke="#7a8399" stroke-width="1"/>
+    <text x="96" y="198" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">Claude Code</text>
+    <text x="96" y="214" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">keychain token</text>
+
+    <!-- 수집기 (focal) -->
+    <rect x="176" y="172" width="112" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="176" y="172" width="112" height="56" rx="6" fill="#eb6c36" fill-opacity="0.08" stroke="#eb6c36" stroke-width="1"/>
+    <text x="232" y="198" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">수집기</text>
+    <text x="232" y="214" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">launchd node</text>
+
+    <!-- Anthropic API (external) -->
+    <rect x="336" y="40" width="160" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="336" y="40" width="160" height="56" rx="6" fill="#2d3142" fill-opacity="0.03" stroke="#2d3142" stroke-opacity="0.30" stroke-width="1"/>
+    <text x="416" y="66" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">Anthropic 사용량 API</text>
+    <text x="416" y="82" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">/api/oauth/usage</text>
+
+    <!-- Gist (focal) -->
+    <rect x="400" y="172" width="160" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="400" y="172" width="160" height="56" rx="6" fill="#eb6c36" fill-opacity="0.08" stroke="#eb6c36" stroke-width="1"/>
+    <text x="480" y="198" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">GitHub 비밀 Gist</text>
+    <text x="480" y="214" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">usage-&lt;label&gt;.json</text>
+
+    <!-- 주기 조회 + 캐시 -->
+    <rect x="632" y="172" width="144" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="632" y="172" width="144" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+    <text x="704" y="198" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">주기 조회 + 캐시</text>
+    <text x="704" y="214" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">WorkManager 15min</text>
+
+    <!-- 타일 -->
+    <rect x="840" y="96" width="160" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="840" y="96" width="160" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+    <text x="920" y="122" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">타일</text>
+    <text x="920" y="138" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">session + weekly</text>
+
+    <!-- 컴플리케이션 -->
+    <rect x="840" y="172" width="160" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="840" y="172" width="160" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+    <text x="920" y="198" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">컴플리케이션</text>
+    <text x="920" y="214" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">RANGED_VALUE ring</text>
+
+    <!-- 계정 선택 -->
+    <rect x="840" y="248" width="160" height="56" rx="6" fill="#f5f5f5"/>
+    <rect x="840" y="248" width="160" height="56" rx="6" fill="#ffffff" stroke="#2d3142" stroke-width="1"/>
+    <text x="920" y="274" fill="#2d3142" font-size="12" font-weight="600" font-family="'Geist', 'Noto Sans KR', 'Noto Sans CJK KR', 'Apple SD Gothic Neo', sans-serif" text-anchor="middle">계정 선택</text>
+    <text x="920" y="290" fill="#4f5d75" font-size="9" font-family="'Geist Mono', monospace" text-anchor="middle">Compose list</text>
+
+    <!-- legend -->
+    <line x1="30" y1="372" x2="1010" y2="372" stroke="#2d3142" stroke-opacity="0.10" stroke-width="0.8"/>
+    <text x="30" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace" letter-spacing="0.14em">LEGEND</text>
+    <rect x="110" y="386" width="20" height="12" rx="3" fill="#eb6c36" fill-opacity="0.08" stroke="#eb6c36"/>
+    <text x="138" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace">FOCAL</text>
+    <rect x="200" y="386" width="20" height="12" rx="3" fill="#ffffff" stroke="#2d3142"/>
+    <text x="228" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace">WATCH COMPONENT</text>
+    <rect x="340" y="386" width="20" height="12" rx="3" fill="#2d3142" fill-opacity="0.03" stroke="#2d3142" stroke-opacity="0.30"/>
+    <text x="368" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace">EXTERNAL</text>
+    <rect x="440" y="386" width="20" height="12" rx="3" fill="#4f5d75" fill-opacity="0.10" stroke="#7a8399"/>
+    <text x="468" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace">INPUT</text>
+    <line x1="530" y1="392" x2="560" y2="392" stroke="#2e5aa8" stroke-width="1.2" marker-end="url(#arrow-link)"/>
+    <text x="568" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace">HTTPS</text>
+    <line x1="630" y1="392" x2="660" y2="392" stroke="#4f5d75" stroke-width="1.2" marker-end="url(#arrow)"/>
+    <text x="668" y="396" fill="#4f5d75" font-size="8" font-family="'Geist Mono', monospace">LOCAL</text>
+  </svg>

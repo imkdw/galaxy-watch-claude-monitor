@@ -6,7 +6,7 @@ export class ConfigError extends Error {
 
 export async function loadConfig(readFile: (path: string) => Promise<string | null>, path: string): Promise<Config> {
   const text = await readFile(path);
-  if (text === null) throw new ConfigError(`설정 파일 ${path}가 없음. gistId를 넣어 만들어야 함 (collector/README.md 참고)`);
+  if (text === null) throw new ConfigError(`설정 파일 ${path}가 없음. gistId를 넣어 만들어야 함 (README.md 설치 가이드 참고)`);
   let parsed: { gistId?: unknown; accounts?: unknown };
   try {
     parsed = JSON.parse(text);
