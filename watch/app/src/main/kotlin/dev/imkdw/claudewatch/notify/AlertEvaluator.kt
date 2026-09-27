@@ -13,7 +13,6 @@ fun interface AlertSink {
     fun post(alerts: List<Alert>)
 }
 
-/** 조회 뒤 모든 계정을 판정하고, 알림 기억은 DataStore에 남긴다 */
 class AlertEvaluator(
     private val store: UsageStore,
     private val sink: AlertSink,

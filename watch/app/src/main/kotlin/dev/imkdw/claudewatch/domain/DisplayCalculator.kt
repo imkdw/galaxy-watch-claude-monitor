@@ -11,7 +11,6 @@ object DisplayCalculator {
 
     private data class Shown(val pct: Int?, val reset: String?, val passed: Boolean)
 
-    /** F5: 리셋 시각이 지났으면(같은 시각 포함) 0% */
     private fun show(window: Window?, now: Instant, zone: ZoneId): Shown {
         if (window == null) return Shown(null, null, false)
         val resetAt = parseInstant(window.resetsAt) ?: return Shown(window.pct, null, false)

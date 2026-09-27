@@ -12,7 +12,6 @@ class AlertPolicyTest {
     private fun state(pct: Int?, account: String? = "personal", resetPassed: Boolean = false) =
         DisplayState(account, pct, null, 10, null, emptyList(), "", Level.NORMAL, sessionResetPassed = resetPassed)
 
-    /** 값을 차례로 넣고 나온 알림을 모두 모은다 */
     private fun feed(vararg steps: Pair<DisplayState, String>, start: AlertMemory = AlertMemory()): Pair<List<Alert>, AlertMemory> {
         var memory = start
         val all = mutableListOf<Alert>()

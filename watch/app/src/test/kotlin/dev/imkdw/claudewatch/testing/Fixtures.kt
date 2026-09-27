@@ -4,7 +4,6 @@ import dev.imkdw.claudewatch.data.ModelPct
 import dev.imkdw.claudewatch.data.UsageFile
 import dev.imkdw.claudewatch.data.Window
 
-/** 루트 fixtures/ 폴더 (수집기와 공유하는 계약 픽스처) */
 object Fixtures {
     fun text(name: String): String =
         checkNotNull(javaClass.classLoader?.getResource(name)) { "픽스처 없음: $name" }.readText()

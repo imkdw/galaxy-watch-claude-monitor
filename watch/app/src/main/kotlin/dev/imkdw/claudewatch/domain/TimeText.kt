@@ -10,7 +10,6 @@ import java.util.Locale
 object TimeText {
     private val hhmm = DateTimeFormatter.ofPattern("HH:mm")
 
-    /** 24시간 미만은 "1시간 12분 후 리셋" (분 올림), 이상은 "수 12:00 리셋" (계획 P4) */
     fun resetText(now: Instant, resetAt: Instant, zone: ZoneId): String {
         val left = Duration.between(now, resetAt)
         if (left >= Duration.ofHours(24)) {
@@ -28,7 +27,6 @@ object TimeText {
         }
     }
 
-    /** "방금 변경" / "3분 전 변경" / "3시간 전 변경" / "2일 전 변경". 미래(시계 오차)는 방금 */
     fun changedText(changedAt: Instant, now: Instant): String {
         val ago = Duration.between(changedAt, now)
         return when {

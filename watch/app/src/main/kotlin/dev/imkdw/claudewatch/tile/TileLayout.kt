@@ -39,7 +39,6 @@ object TileIds {
     const val ACCOUNT = "account"
 }
 
-/** 목업 docs/ui-mockup.svg의 Claude 주황 */
 object TileColors {
     const val CLAUDE = 0xFFD97757.toInt()
     const val WARN = 0xFFF4A340.toInt()
@@ -69,7 +68,6 @@ fun accountClickable(context: Context) = clickable(
     id = TileIds.ACCOUNT,
 )
 
-/** F2 타일. 표시 계산은 끝난 상태(DisplayState)만 받는다 */
 fun tileLayout(context: Context, state: DisplayState, deviceParams: DeviceParameters): LayoutElement =
     materialScope(context, deviceParams, allowDynamicTheme = false, defaultColorScheme = scheme) {
         primaryLayout(
@@ -81,7 +79,6 @@ fun tileLayout(context: Context, state: DisplayState, deviceParams: DeviceParame
         )
     }
 
-/** 계정 칩: 탭하면 계정 선택 화면. 화면이 작아서 제목 자리에 둔다 */
 private fun MaterialScope.title(context: Context, account: String?): LayoutElement =
     if (account == null) {
         text("Claude 사용량".layoutString)
@@ -98,13 +95,6 @@ private fun MaterialScope.mainContent(state: DisplayState): LayoutElement {
     if (state.account != null) {
         items += usageBlock("세션", state.sessionPct, state.sessionReset)
         items += usageBlock("주간", state.weeklyPct, state.weeklyReset)
-        if (state.models.isNotEmpty()) {
-            items += text(
-                state.models.joinToString("  ") { "${it.model} ${it.pct}%" }.layoutString,
-                typography = Typography.LABEL_SMALL,
-                color = colorScheme.onSurfaceVariant,
-            )
-        }
     }
     items += text(
         state.footer.layoutString,

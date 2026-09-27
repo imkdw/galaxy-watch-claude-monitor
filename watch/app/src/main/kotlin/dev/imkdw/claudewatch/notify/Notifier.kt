@@ -9,7 +9,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import dev.imkdw.claudewatch.R
 
-/** F9, F10: 진동 알림 */
 class Notifier(private val context: Context) : AlertSink {
 
     override fun post(alerts: List<Alert>) {
@@ -41,7 +40,6 @@ class Notifier(private val context: Context) : AlertSink {
         context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
     }
 
-    /** 같은 계정의 같은 종류는 덮어쓴다 */
     private fun notificationId(alert: Alert): Int {
         val kind = if (alert is Alert.Reset) 1 else 0
         return alert.account.hashCode() * 2 + kind

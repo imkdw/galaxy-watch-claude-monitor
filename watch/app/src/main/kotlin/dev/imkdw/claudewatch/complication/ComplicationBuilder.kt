@@ -19,10 +19,8 @@ import dev.imkdw.claudewatch.ui.AccountPickerActivity
 object ComplicationBuilder {
     private fun plain(text: String) = PlainComplicationText.Builder(text).build()
 
-    /** F13: 5% 단위 20칸. 0~59 기본, 60~84 주황, 85~100 빨강 */
     private val levelRamp = ColorRamp(IntArray(20) { i -> TileColors.of(levelOf(i * 5)) }, false)
 
-    /** F1: 선택 계정의 세션 사용률 링 + 숫자 + 계정 이름 */
     fun buildRanged(state: DisplayState, tapAction: PendingIntent?): RangedValueComplicationData {
         val pct = state.sessionPct
         val description = if (state.account == null || pct == null) "데이터 없음" else "${state.account} 세션 $pct%"

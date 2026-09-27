@@ -29,7 +29,6 @@ import java.time.ZoneId
 
 data class AccountItem(val label: String, val subtitle: String, val selected: Boolean)
 
-/** PRD 9.3: 라벨 가나다순, 부제는 리셋 계산이 반영된 값 */
 fun accountItems(snapshot: Snapshot, now: Instant, zone: ZoneId): List<AccountItem> =
     AccountResolver.sortedLabels(snapshot.accounts.keys).map { label ->
         val state = DisplayCalculator.toDisplay(snapshot.accounts.getValue(label), now, zone)

@@ -35,12 +35,10 @@ private fun LayoutElement.walk(visit: (LayoutElement) -> Unit) {
     children().forEach { it.walk(visit) }
 }
 
-/** 레이아웃 트리의 모든 Text 내용 (계획 S6-1) */
 fun collectTexts(layout: LayoutElement): List<String> = buildList {
     layout.walk { e -> (e as? Text)?.text?.value?.let(::add) }
 }
 
-/** 클릭 가능한 요소의 id → 동작 */
 fun collectClickables(layout: LayoutElement): Map<String, Action?> = buildMap {
     layout.walk { e -> e.modifiers()?.clickable?.let { put(it.id, it.onClick) } }
 }

@@ -62,7 +62,6 @@ class UsageRepositoryTest {
     fun `RP4 select 후 observe에 선택 라벨이 반영된다`() = runTest {
         val repo = UsageRepository(FakeGistSource(FetchResult.Updated(body, "e1")), store, clock)
         repo.refresh()
-        // 선택 전에는 changedAt 최신(personal 12:05 > work 11:40)
         assertThat(repo.observe().first().selected).isEqualTo("personal")
         repo.select("work")
         val snap = repo.observe().first()

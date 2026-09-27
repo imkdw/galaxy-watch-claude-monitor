@@ -12,7 +12,6 @@ class UsageComplicationService : SuspendingComplicationDataSourceService() {
     override suspend fun onComplicationRequest(request: ComplicationRequest): ComplicationData? =
         ComplicationBuilder.forSelected(this, request.complicationType)
 
-    /** 워치페이스 편집 화면용 */
     override fun getPreviewData(type: ComplicationType): ComplicationData? =
         ComplicationBuilder.build(type, PREVIEW, null)
 

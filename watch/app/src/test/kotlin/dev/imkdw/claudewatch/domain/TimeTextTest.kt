@@ -9,7 +9,6 @@ import java.time.ZoneOffset
 
 class TimeTextTest {
     private val seoul = ZoneId.of("Asia/Seoul")
-    // 2026-09-27 (일) 21:00 KST
     private val now = Instant.parse("2026-09-27T12:00:00Z")
 
     private fun resetIn(d: Duration, zone: ZoneId = seoul) = TimeText.resetText(now, now.plus(d), zone)
@@ -30,7 +29,6 @@ class TimeTextTest {
 
     @Test
     fun `X3 24시간 이상이면 요일과 시각`() {
-        // 2026-09-30 (수) 12:00 KST
         assertThat(TimeText.resetText(now, Instant.parse("2026-09-30T03:00:00Z"), seoul)).isEqualTo("수 12:00 리셋")
         assertThat(resetIn(Duration.ofHours(24))).isEqualTo("월 21:00 리셋")
     }

@@ -54,10 +54,9 @@ class TileLayoutTest {
     }
 
     @Test
-    fun `TL7 모델별 주간 한도가 있으면 행을 보이고 없으면 안 보인다`() {
-        val withModels = collectTexts(tileLayout(context, normal.copy(models = listOf(ModelPct("Fable", 7))), watchDevice))
-        assertThat(withModels).contains("Fable 7%")
-        assertThat(collectTexts(tileLayout(context, normal, watchDevice)).none { it.startsWith("Fable") }).isTrue()
+    fun `TL7 모델별 주간 한도는 타일에 보이지 않는다`() {
+        val texts = collectTexts(tileLayout(context, normal.copy(models = listOf(ModelPct("Fable", 7))), watchDevice))
+        assertThat(texts.none { it.contains("Fable") }).isTrue()
     }
 
     @Test

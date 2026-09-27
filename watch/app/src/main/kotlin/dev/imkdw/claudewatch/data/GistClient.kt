@@ -21,7 +21,6 @@ fun interface GistSource {
     suspend fun fetch(etag: String?): FetchResult
 }
 
-/** `GET /gists/{id}` 비인증 조회. 워치에는 비밀키가 없다 (PRD 10 보안) */
 class GistClient(
     private val gistId: String,
     private val http: OkHttpClient = defaultHttp,

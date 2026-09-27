@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- 캐시는 Gist에서 다시 받으면 되므로 백업하지 않는다 -->
 <data-extraction-rules>
     <cloud-backup>
         <exclude domain="root" />

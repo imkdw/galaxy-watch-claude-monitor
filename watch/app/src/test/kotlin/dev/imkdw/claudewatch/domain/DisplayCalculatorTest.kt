@@ -49,7 +49,6 @@ class DisplayCalculatorTest {
 
     @Test
     fun `C4 Mac을 껐을 때 표 - 19시59분 70, 20시 0, 다음날 9시 0`() {
-        // 18:00 KST에 70%, 리셋 20:00 KST
         val f = usageFile(session = Window(70, "2026-09-27T11:00:00Z"), changedAt = "2026-09-27T09:00:00Z")
         fun at(iso: String) = DisplayCalculator.toDisplay(f, Instant.parse(iso), zone).sessionPct
         assertThat(at("2026-09-27T10:59:00Z")).isEqualTo(70)

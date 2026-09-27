@@ -10,7 +10,6 @@ class GistFormatException(message: String) : Exception(message)
 object GistParser {
     private val usageFileName = Regex("^usage-(.+)\\.json$")
 
-    /** `GET /gists/{id}` 응답에서 `usage-*.json`만 뽑는다. 키는 파일명의 라벨. 깨진 파일은 건너뛴다 */
     fun parse(body: String): Map<String, UsageFile> {
         val root = try {
             UsageJson.parseToJsonElement(body) as? JsonObject

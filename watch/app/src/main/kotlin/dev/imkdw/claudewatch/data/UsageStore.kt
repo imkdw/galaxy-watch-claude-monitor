@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.map
 import kotlinx.serialization.SerializationException
 import java.time.Instant
 
-/** 계정별 캐시 + 선택 계정 + ETag. 타일과 컴플리케이션은 이것만 읽는다 */
 class UsageStore(private val dataStore: DataStore<Preferences>) {
 
     data class Stored(
@@ -33,7 +32,6 @@ class UsageStore(private val dataStore: DataStore<Preferences>) {
 
     suspend fun current(): Stored = data.first()
 
-    /** Gist 스냅샷으로 통째로 바꾼다. Gist에서 사라진 계정은 지운다 */
     suspend fun saveSnapshot(accounts: Map<String, UsageFile>, etag: String?, fetchedAt: Instant) {
         dataStore.edit { prefs ->
             prefs.asMap().keys.filter { it.name.startsWith(ACCOUNT_PREFIX) }.forEach { prefs.remove(it) }

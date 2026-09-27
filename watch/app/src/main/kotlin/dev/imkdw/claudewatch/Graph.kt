@@ -17,7 +17,6 @@ import java.time.ZoneId
 
 private val Context.usageDataStore by preferencesDataStore(name = "usage")
 
-/** 서비스, 워커, 액티비티가 함께 쓰는 의존성. 테스트는 override로 바꾼다 */
 object Graph {
     @Volatile private var sourceOverride: UsageSource? = null
     @Volatile private var uiUpdaterOverride: UiUpdater? = null

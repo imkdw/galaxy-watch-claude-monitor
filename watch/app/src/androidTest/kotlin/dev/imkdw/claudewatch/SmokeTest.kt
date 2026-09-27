@@ -21,7 +21,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.util.concurrent.TimeUnit
 
-/** 계획 3.5: Wear OS 에뮬레이터 스모크 테스트 */
 @RunWith(AndroidJUnit4::class)
 class SmokeTest {
     private val context: Context = ApplicationProvider.getApplicationContext()
@@ -35,7 +34,6 @@ class SmokeTest {
 
     @Test
     fun e2_계정_선택_화면이_크래시_없이_뜬다() {
-        // 권한 요청 대화상자가 화면을 가리지 않게 미리 허용한다
         InstrumentationRegistry.getInstrumentation().uiAutomation
             .grantRuntimePermission(context.packageName, Manifest.permission.POST_NOTIFICATIONS)
         ActivityScenario.launch(AccountPickerActivity::class.java).use { scenario ->

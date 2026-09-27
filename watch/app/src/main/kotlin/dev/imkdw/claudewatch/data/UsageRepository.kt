@@ -12,7 +12,6 @@ sealed interface RefreshOutcome {
     data class Failed(val reason: FailReason) : RefreshOutcome
 }
 
-/** 캐시 전체와, 선택 규칙(AccountResolver)을 적용한 선택 계정 */
 data class Snapshot(val accounts: Map<String, UsageFile>, val selected: String?) {
     val selectedFile: UsageFile? get() = selected?.let(accounts::get)
 
@@ -38,7 +37,6 @@ class UsageRepository(
 
     override suspend fun refresh(): RefreshOutcome {
         val cached = store.current()
-        // 캐시가 비었는데 304를 받으면 영영 빈 화면이 되므로 etag를 보내지 않는다
         val etag = cached.etag.takeIf { cached.accounts.isNotEmpty() }
         return when (val result = gist.fetch(etag)) {
             is FetchResult.NotModified -> RefreshOutcome.Unchanged

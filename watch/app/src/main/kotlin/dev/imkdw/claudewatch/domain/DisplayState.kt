@@ -2,7 +2,6 @@ package dev.imkdw.claudewatch.domain
 
 import dev.imkdw.claudewatch.data.ModelPct
 
-/** F13 색상 단계 */
 enum class Level { NORMAL, WARN, DANGER }
 
 fun levelOf(pct: Int?): Level = when {
@@ -12,7 +11,6 @@ fun levelOf(pct: Int?): Level = when {
     else -> Level.NORMAL
 }
 
-/** 타일, 컴플리케이션, 계정 선택 화면이 그대로 그리는 값. 리셋 계산이 끝난 상태 */
 data class DisplayState(
     val account: String?,
     val sessionPct: Int?,

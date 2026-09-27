@@ -11,7 +11,6 @@ val localProps = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }?.inputStream()?.use { load(it) }
 }
 val gistId: String = localProps.getProperty("gistId", "").trim()
-// 에뮬레이터 확인용으로 로컬 서버(http://10.0.2.2:PORT/)를 가리킬 때만 바꾼다
 val gistApiBase: String = localProps.getProperty("gistApiBase", "").trim().ifEmpty { "https://api.github.com/" }
 
 android {
@@ -47,7 +46,6 @@ android {
     }
 
     sourceSets {
-        // 수집기와 같은 계약 픽스처를 테스트 리소스로 읽는다
         getByName("test").resources.srcDir("../../fixtures")
     }
 }
@@ -56,7 +54,6 @@ kotlin {
     jvmToolchain(17)
 }
 
-// Robolectric은 SDK 36 샌드박스를 Java 21에서만 띄운다
 tasks.withType<Test>().configureEach {
     javaLauncher = javaToolchains.launcherFor { languageVersion = JavaLanguageVersion.of(21) }
     jvmArgs(

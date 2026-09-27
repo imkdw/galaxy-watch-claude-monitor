@@ -42,7 +42,6 @@ class FakeUiUpdater : UiUpdater {
     }
 }
 
-/** 타일, 컴플리케이션, 화면 테스트용 가짜 저장소 */
 class FakeUsageSource(
     accounts: Map<String, UsageFile> = emptyMap(),
     selected: String? = null,

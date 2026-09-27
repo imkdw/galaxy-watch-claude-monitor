@@ -5,7 +5,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.wear.compose.material3.ColorScheme
 import androidx.wear.compose.material3.MaterialTheme
 
-/** 목업 docs/ui-mockup.svg ③의 색 */
 private val claudeColors = ColorScheme(
     primary = Color(0xFFD97757),
     onPrimary = Color.Black,
